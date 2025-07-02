@@ -1,0 +1,14 @@
+{
+  "posts": [
+    {
+      "id": "2",
+      "title": "JSON서버에서 추가함.",
+      "author": "json"
+    },
+    {
+      "id": 9,
+      "title": "fetch연습",
+      "author": "admin"
+    }
+  ]
+}
