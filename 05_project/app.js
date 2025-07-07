@@ -8,6 +8,7 @@ const app = express(); // 인스턴스 생성
 app.use(express.json());
 
 app.listen(3000, () => {
+  console.log("npm install");
   console.log("http://localhost:3000");
 });
 
