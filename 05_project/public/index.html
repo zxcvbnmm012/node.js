@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!--axios-->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <form action="">
+      <input type="file" name="base64" />
+      <!--클릭하면: change 이벤트 발생-->
+      <button type="button">Upload</button>
+      <!--클릭하면: upload 이벤트 발생-->
+    </form>
+
+    <script>
+      let data = ""; // base64 인코딩 데이터
+      let fn; // 파일명
+      // 파일선택.
+      document
+        .querySelector('input[name="base64"]')
+        .addEventListener("change", (e) => {
+          // console.dir(e.target.files[0]);
+          let file = e.target.files[0]; // e: 이벤트, e.target: 이벤트를 받는 타겟, e.target.files[0]: 타겟의 첫번째 파일.
+          fn = file.name; // file의 name 속성.
+          let fr = new FileReader(); // FileReader 객체
+          // load 이벤트: file을 readAsDataURL 메소드로 열때 발생.
+          fr.onload = function (evt) {
+            console.log(evt.target); // axios 전달할 값.
+            // result: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcg ..."
+            // iVBORw0KGgoAAAANSUhEUgAAAcg ... 가 실제 데이터.
+            data = evt.target.result;
+          };
+          fr.readAsDataURL(file); // readAsDataURL(): FileReader 객체의 메소드
+        });
+
+      // 저장.
+      document
+        .querySelector('button[type="button"]')
+        .addEventListener("click", async (e) => {
+          // axios의 구조: 객체타입으로 값을 넘겨야 함.
+          let result = await axios({
+            method: "post",
+            url: "/upload/" + fn + "/8",
+            // {키:값} -> {data:data} : key와 value가 같으면 {data}로 줄여쓰기 가능.
+            data: { data },
+          });
+          console.log(result);
+        });
+    </script>
+  </body>
+</html>
