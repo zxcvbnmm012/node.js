@@ -3,6 +3,7 @@
 const mysql = require("mysql2");
 const sql = require("./product");
 
+// 환경변수
 const pool = mysql.createPool({
   host: process.env.HOST,
   port: process.env.PORT,
@@ -18,6 +19,7 @@ const pool = mysql.createPool({
 async function query(alias, values = [], where = "") {
   return new Promise((resolve, reject) => {
     console.log(sql[alias].query + where);
+    // sql[alias].query + where: 쿼리문, values: 등록(전달)할 값, (err, result): 콜백함수
     pool.query(sql[alias].query + where, values, (err, result) => {
       if (err) {
         console.log("처리중 에러", err);
